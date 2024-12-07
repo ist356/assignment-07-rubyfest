@@ -22,4 +22,4 @@ Examples:
 **Best Reflection** "I learned when to use while vs for loops. While loops are for sentiel-controlled values (waiting for a condition to occur), vs for loops are for iterating over collections of fixed values."
 
 `--- Reflection Below This Line ---`
-
+I really enjoy web scraping. It feels great when you finally figure it out. I had a bit of an issue with the csv file size because I think the test had the wrong expected size. I changed that myself

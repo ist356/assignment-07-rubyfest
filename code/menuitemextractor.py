@@ -30,8 +30,9 @@ what should be returned back should be a list of only the desired text. There sh
 See `TEST_DATA` in the `test_menuitemextractor.py` file for examples of the text you will be working with.'''
     cleaned_text = []
     for line in scraped_text.split('\n'):
-        if line not in ['', 'NEW!', 'NEW', 'S', 'V', 'GS', 'P']:
-            cleaned_text.append(line)
+        if line not in ['', 'S', 'V', 'GS', 'P']:
+            if not line.startswith('NEW'):
+                cleaned_text.append(line)
     return cleaned_text
 
 def extract_menu_item(title:str, scraped_text: str) -> MenuItem:
@@ -42,10 +43,15 @@ def extract_menu_item(title:str, scraped_text: str) -> MenuItem:
 In the function body, you should call `clean_scraped_text` to get the cleaned text for each item, then create a `MenuItem` object for each item. Do not forget to call `clean_price` to get the price as a float. Finally  check to see if there is a menu description (cleaned list of text has more than 2 items), when there is no description, use "No desciption available" as the description.
 
 Use the tests in `tests/test_menuitemextractor.py` to verify your code is correct and in most cases, help you figure out what to do.'''
-    cleaned_text = clean_scraped_text(scraped_text)
-    if len(cleaned_text) == 2:
-        return MenuItem(title, cleaned_text[0], clean_price(cleaned_text[1]), 'No description available')
-    return MenuItem(title, cleaned_text[0], clean_price(cleaned_text[1]), cleaned_text[2])
+    cleaned_items = clean_scraped_text(scraped_text)
+    item = MenuItem(category=title, name="", price=0.0, description="")
+    item.name = cleaned_items[0]
+    item.price = clean_price(cleaned_items[1])
+    if len(cleaned_items) > 2:
+        item.description = cleaned_items[2]
+    else:
+        item.description = "No description available."
+    return item
 
 
 if __name__=='__main__':
